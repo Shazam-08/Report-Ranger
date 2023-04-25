@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Navigate from "./Navigate";
 
 function Login() {
   const [username, setUsername] = useState("");
@@ -51,6 +52,7 @@ function Login() {
           >
             Login
           </button>
+          <Navigate/>
         </form>
       </div>
     </div>
