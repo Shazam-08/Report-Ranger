@@ -1,12 +1,11 @@
 import React, { useState } from 'react';
-
+import axios from 'axios';
 const SignUp = () => {
   const [formData, setFormData] = useState({
     name: '',
     phoneNo: '',
     regId: '',
     password: '',
-    confirmPassword: ''
   });
 
   const handleChange = (event) => {
@@ -18,7 +17,22 @@ const SignUp = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log(formData); // You can submit this data to your backend server or API
+    axios.post('http://localhost:3001/signup', {
+      username: formData.name,
+      phoneNo:Number(formData.phoneNo),
+      regId: Number(formData.regId),
+      password: formData.password,
+    }).then((response) => {
+      console.log(response);
+      setFormData({
+        name: '',
+        phoneNo: '',
+        regId: '',
+        password: '',
+      });
+    }).catch(err => {
+      console.log(err)
+    })
   };
 
   return (
@@ -26,7 +40,7 @@ const SignUp = () => {
       <div className='max-w-md w-full bg-white p-6 rounded-md shadow-md'>
 
 
-        <form onSubmit={handleSubmit} className="p-8 rounded-lg text-xl">
+        <form className="p-8 rounded-lg text-xl">
           <div className="mb-4">
             <label htmlFor="name" className="block font-medium mb-2">Name:</label>
             <input
@@ -71,18 +85,7 @@ const SignUp = () => {
               className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
             />
           </div>
-          <div className="mb-4">
-            <label htmlFor="confirmPassword" className="block font-medium mb-2">Confirm Password:</label>
-            <input
-              type="password"
-              id="confirmPassword"
-              name="confirmPassword"
-              value={formData.confirmPassword}
-              onChange={handleChange}
-              className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:border-indigo-500"
-            />
-          </div>
-          <button type="submit" className="w-full bg-indigo-500 text-white rounded-lg py-2 hover:bg-indigo-600 transition duration-200 mt-5">Sign Up</button>
+          <button onClick={handleSubmit} className="w-full bg-indigo-500 text-white rounded-lg py-2 hover:bg-indigo-600 transition duration-200 mt-5">Sign Up</button>
         </form>
       </div>
     </div>
