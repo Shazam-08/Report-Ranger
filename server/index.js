@@ -4,6 +4,7 @@ const app = express();
 // const router = express.Router();
 // const userDefination = require('./models/users');
 const cors = require('cors');
+const md5 = require('md5');
 // const { DataTypes } = require('sequelize');
 // const users = userDefination(db.sequelize, DataTypes);
 
@@ -30,7 +31,7 @@ app.post('/signup', async (req, res) => {
     const username = req.body.username;
     const phoneNo = req.body.phoneNo;
     const regId = req.body.regId;
-    const password = req.body.password;
+    const password = md5(req.body.password);
     // const user = {
     //     username: req.body.username,
     //     phoneNo: req.body.phoneNo,
